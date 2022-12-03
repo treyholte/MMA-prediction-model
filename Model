@@ -1,0 +1,23 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# Load the data into a pandas DataFrame
+df = pd.read_csv('mma_fights.csv')
+
+# Extract the relevant features for the model
+X = df[['fighter1_height', 'fighter1_reach', 'fighter1_wins', 'fighter1_losses',
+        'fighter2_height', 'fighter2_reach', 'fighter2_wins', 'fighter2_losses']]
+
+# Extract the target variable
+y = df['winner']
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+
+# Train the model using a logistic regression classifier
+model = LogisticRegression(solver='lbfgs')
+model.fit(X_train, y_train)
+
+# Evaluate the model on the test data
+print(model.score(X_test, y_test))
