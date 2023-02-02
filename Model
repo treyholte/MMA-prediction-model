@@ -21,3 +21,6 @@ model.fit(X_train, y_train)
 
 # Evaluate the model on the test data
 print(model.score(X_test, y_test))
+Test
+['fighter1_takedown', 'fighter1_defense', 'fighter1_knockdown', 'fighter1_knockeddown',
+        'fighter2_takedown', 'fighter2_defense', 'fighter2_knockdown', 'fighter2_knoceddown']]
