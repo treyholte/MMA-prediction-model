@@ -1,0 +1,38 @@
+import requests
+from bs4 import BeautifulSoup
+import csv
+
+# URL of the page containing UFC event results
+url = 'https://www.espn.com/mma/schedule/_/league/ufc'
+
+# Send a GET request to the page and retrieve its content
+response = requests.get(url)
+content = response.content
+
+# Parse the HTML content with BeautifulSoup
+soup = BeautifulSoup(content, 'html.parser')
+
+# Find the table containing the event results
+table = soup.find('table')
+
+# Find all rows in the table except the header
+rows = table.find_all('tr')[1:]
+
+# Initialize a list to hold the winners
+winners = []
+
+# Loop through the rows and extract the winner's name
+for row in rows:
+    cells = row.find_all('td')
+    winner = cells[2].text.strip() # Assumes the winner is always in the third cell
+    winners.append(winner)
+
+# Reverse the order of the winners to get the most recent events first
+winners.reverse()
+
+# Write the winners to a CSV file
+with open('winners.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Winner'])
+    for winner in winners:
+        writer.writerow([winner])
